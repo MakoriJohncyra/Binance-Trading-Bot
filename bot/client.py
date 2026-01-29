@@ -34,10 +34,10 @@ class BinanceFuturesClient:
                 api_secret=api_secret,
                 testnet=testnet  # Always True for practice mode
             )
-            logger.info("✅ Binance client connected successfully!")
+            logger.info(" Binance client connected successfully!")
             
         except Exception as e:
-            logger.error(f"❌ Failed to connect to Binance: {str(e)}")
+            logger.error(f" Failed to connect to Binance: {str(e)}")
             raise
     
     def place_market_order(self, symbol: str, side: str, quantity: float):
@@ -52,7 +52,7 @@ class BinanceFuturesClient:
         - quantity: How much to buy/sell
         """
         try:
-            logger.info(f"🚀 Placing MARKET order: {side} {quantity} {symbol}")
+            logger.info(f" Placing MARKET order: {side} {quantity} {symbol}")
             
             # Send order to Binance
             order = self.client.futures_create_order(
@@ -62,7 +62,7 @@ class BinanceFuturesClient:
                 quantity=quantity   # How much to trade
             )
             
-            logger.info(f"✅ Market order placed! Order ID: {order.get('orderId')}")
+            logger.info(f" Market order placed! Order ID: {order.get('orderId')}")
             return order
             
         except BinanceAPIException as e:
@@ -90,7 +90,7 @@ class BinanceFuturesClient:
         - price: At what price to execute
         """
         try:
-            logger.info(f"🎯 Placing LIMIT order: {side} {quantity} {symbol} @ ${price}")
+            logger.info(f" Placing LIMIT order: {side} {quantity} {symbol} @ ${price}")
             
             # Send order to Binance
             order = self.client.futures_create_order(
@@ -122,7 +122,7 @@ class BinanceFuturesClient:
         Useful to see if order was filled, cancelled, or still waiting.
         """
         try:
-            logger.info(f"🔍 Checking order status for ID: {order_id}")
+            logger.info(f" Checking order status for ID: {order_id}")
             order_status = self.client.futures_get_order(symbol=symbol, orderId=order_id)
             logger.info(f"Order status: {order_status.get('status')}")
             return order_status

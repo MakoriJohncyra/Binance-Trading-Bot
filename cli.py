@@ -33,7 +33,7 @@ def print_banner():
 
 def print_order_summary(symbol, side, order_type, quantity, price=None):
     """Print a summary of the order before placing it"""
-    print("\n📋 ORDER SUMMARY:")
+    print("\n ORDER SUMMARY:")
     print("-" * 40)
     print(f"   Symbol:       {symbol}")
     print(f"   Side:         {side}")
@@ -44,12 +44,12 @@ def print_order_summary(symbol, side, order_type, quantity, price=None):
     print("-" * 40)
     
     # Ask for confirmation
-    confirm = input("\n⚠️  Confirm this order? (yes/no): ").lower()
+    confirm = input("\n  Confirm this order? (yes/no): ").lower()
     return confirm == 'yes'
 
 def print_order_result(order_response):
     """Print the result of the placed order"""
-    print("\n✅ ORDER PLACED SUCCESSFULLY!")
+    print("\n ORDER PLACED SUCCESSFULLY!")
     print("="*50)
     print(f"   Order ID:     {order_response.get('orderId')}")
     print(f"   Status:       {order_response.get('status')}")
@@ -59,10 +59,10 @@ def print_order_result(order_response):
     
     # Give some advice based on order type
     if order_response.get('type') == 'LIMIT':
-        print("\n💡 Your limit order is now active!")
+        print("\n Your limit order is now active!")
         print("   It will execute when the market reaches your price.")
     else:
-        print("\n💡 Market order executed immediately!")
+        print("\n Market order executed immediately!")
 
 def main():
     """
@@ -122,7 +122,7 @@ EXAMPLES:
         logger.info("Starting order placement process...")
         
         # STEP 1: Validate all inputs using our Validator class
-        print("\n🔍 Validating inputs...")
+        print("\n Validating inputs...")
         try:
             symbol = Validator.validate_symbol(args.symbol)
             side = Validator.validate_side(args.side)
@@ -132,18 +132,18 @@ EXAMPLES:
             # Special check for LIMIT orders
             if order_type == 'LIMIT':
                 if not args.price:
-                    raise ValueError("❌ Price is required for LIMIT orders!")
+                    raise ValueError(" Price is required for LIMIT orders!")
                 price = Validator.validate_price(str(args.price))
             else:
                 price = None
                 
-            print("✅ All inputs validated successfully!")
+            print(" All inputs validated successfully!")
             
         except ValueError as e:
             # If validation fails, show error and exit
             logger.error(f"Input validation failed: {str(e)}")
-            print(f"\n❌ Error: {str(e)}")
-            print("\n💡 Tip: Use --help to see examples")
+            print(f"\n Error: {str(e)}")
+            print("\n Tip: Use --help to see examples")
             return 1
         
         # STEP 2: Get API credentials
@@ -151,7 +151,7 @@ EXAMPLES:
         api_secret = os.getenv('BINANCE_API_SECRET')
         
         if not api_key or not api_secret:
-            print("\n❌ API credentials not found!")
+            print("\n API credentials not found!")
             print("   Please create a '.env' file with:")
             print("   BINANCE_API_KEY=your_key_here")
             print("   BINANCE_API_SECRET=your_secret_here")
@@ -160,21 +160,21 @@ EXAMPLES:
         
         # STEP 3: Show order summary and ask for confirmation
         if not print_order_summary(symbol, side, order_type, quantity, price):
-            print("\n❌ Order cancelled by user.")
+            print("\n Order cancelled by user.")
             return 0
         
         # STEP 4: Connect to Binance
-        print("\n🔗 Connecting to Binance...")
+        print("\n Connecting to Binance...")
         try:
             client = BinanceFuturesClient(api_key, api_secret)
-            print("✅ Connected to Binance Testnet!")
+            print(" Connected to Binance Testnet!")
         except Exception as e:
-            print(f"\n❌ Failed to connect to Binance: {str(e)}")
-            print("\n💡 Check your API credentials and internet connection")
+            print(f"\n Failed to connect to Binance: {str(e)}")
+            print("\n Check your API credentials and internet connection")
             return 1
         
         # STEP 5: Place the order
-        print(f"\n📤 Placing {order_type} order...")
+        print(f"\n Placing {order_type} order...")
         try:
             if order_type == 'MARKET':
                 response = client.place_market_order(symbol, side, quantity)
@@ -188,18 +188,18 @@ EXAMPLES:
             return 0
             
         except Exception as e:
-            print(f"\n❌ Failed to place order: {str(e)}")
+            print(f"\n Failed to place order: {str(e)}")
             logger.error(f"Order placement failed: {str(e)}")
             return 1
     
     except KeyboardInterrupt:
         # Handle Ctrl+C gracefully
-        print("\n\n⚠️  Operation cancelled by user.")
+        print("\n\n  Operation cancelled by user.")
         return 0
     
     except Exception as e:
         # Catch any other unexpected errors
-        print(f"\n💥 Unexpected error: {str(e)}")
+        print(f"\n Unexpected error: {str(e)}")
         logger.error(f"Unexpected error in main: {str(e)}")
         return 1
 
