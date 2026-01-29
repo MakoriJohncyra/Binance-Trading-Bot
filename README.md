@@ -49,11 +49,17 @@ python3 --version
 ### Step 2: Create Binance Futures Testnet Account
 
 -Go to: https://testnet.binancefuture.com
+
 -Click Register (use email login — no KYC needed)
--After logging in → go to API Management (usually in profile or sidebar)
+
+-After logging in → go to API Management (usually in profile or sidebar)   
+
 -Click Create API Key
+
 -Copy and securely save both:
+
         1.API Key
+        
         2.Secret Key
 
 ### Step 3: Install the Bot
